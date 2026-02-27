@@ -1,1 +1,0 @@
-const t=document.getElementById("theme-toggle"),e=document.body;localStorage.getItem("theme")==="dark"||!localStorage.getItem("theme")&&window.matchMedia("(prefers-color-scheme: dark)").matches?e.classList.add("dark"):e.classList.remove("dark");t.addEventListener("click",()=>{e.classList.toggle("dark"),localStorage.setItem("theme",e.classList.contains("dark")?"dark":"light")});
