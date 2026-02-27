@@ -9,6 +9,12 @@ export const siteConfig = {
   timezone: "Asia/Shanghai",
   dateFormat: "yyyy-MM-dd",
   buildDate: "2008-10-08",
+  colors: {
+    primary: "#F03838",
+    primaryHover: "#e41111",
+    primaryLight: "#f25050",
+    primaryDisabled: "#f46767"
+  },
   twikoo: {
     envId: "https://twikoo.ficor.cc",
     lang: "zh-CN"

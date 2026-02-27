@@ -1,7 +1,8 @@
 # Hacker 主题
 
-Hacker是一款专注于写作的简洁博客主题。在如此讲究复杂排版的趋势下，选择回归本源，专注于写作这件事。一开始是moyo为Wordpress所创作的一个主题，由DaraW移植到Hexo。
-本主题由Wordpress移植而来，基于Astro构建，响应式设计，静态站点生成，支持Markdown格式的博客文章和页面。
+Hacker是一款选择回归本源，专注于写作并且易于阅读的的简洁博客主题。它具有完全响应式设计，支持视网膜显示，且易于自定义。每个元素都能响应，为你的读者在浏览博客的全过程中提供最佳的用户体验。
+一开始是moyo为Wordpress所创作的一个主题，后由DaraW移植到Hexo。
+本主题由作者Ficor从Wordpress移植而来，基于Astro构建，响应式设计，静态站点生成，支持Markdown格式的博客文章和页面。
 
 ## 主题特点
 
@@ -12,7 +13,7 @@ Hacker是一款专注于写作的简洁博客主题。在如此讲究复杂排�
 - **分类与标签**：自动生成分类和标签页面
 - **归档系统**：按年份和月份组织文章
 - **友链页面**：展示友情链接，支持头像和描述
-- **关于页面**：展示站点和博主信息
+- **关于页面**：展示站点、主题和博主信息
 - **RSS 订阅**：提供 RSS 订阅链接
 - **评论系统**：集成 Twikoo 评论系统
 
@@ -24,7 +25,7 @@ Hacker是一款专注于写作的简洁博客主题。在如此讲究复杂排�
 
 ### 设计特点
 - **简洁现代**：干净的布局，注重内容可读性
-- **自定义配色**：支持亮色和暗色主题的自定义配色
+- **自定义配色**：支持亮色和暗色主题的自定义配色，支持修改主题配色
 - **响应式布局**：在各种设备上都能提供良好的用户体验
 - **平滑过渡**：添加适当的动画和过渡效果
 
@@ -78,14 +79,14 @@ export const siteConfig = {
   dateFormat: "yyyy-MM-dd",
   buildDate: "2008-10-08",
   twikoo: {
-    envId: "https://twikoo.ficor.cc",
+    envId: "https://twikoo.yourdomain.com",
     lang: "zh-CN"
   },
   social: {
-    github: "https://github.com/panjinye",
-    twitter: "https://twitter.com/ficorpan",
-    qq: "https://wpa.qq.com/msgrd?v=3&uin=316160777&site=qq&menu=yes",
-    mastodon: "https://mastodon.social/@ficor",
+    github: "https://github.com/panjinye/Hacker",
+    twitter: "https://twitter.com/",
+    qq: "https://wpa.qq.com/msgrd?v=3&uin=123456&site=qq&menu=yes",
+    mastodon: "https://mastodon.social/",
     email: "mailto:i@ficor.cc",
     rss: "https://ficor.net/feed"
   },
@@ -97,7 +98,15 @@ export const siteConfig = {
   ]
 };
 ```
+### 颜色配置
 
+在src/config/site.ts 文件中添加了colors 配置，包含四个颜色值：
+
+- primary ：主颜色
+- primaryHover ：悬停状态颜色
+- primaryLight ：亮色调
+- primaryDisabled ：禁用状态颜色
+- 
 ### 友链配置
 
 修改 `src/config/links.ts` 文件来添加友情链接：
