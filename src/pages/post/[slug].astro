@@ -1,0 +1,305 @@
+---
+// 单篇文章详情页
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import Twikoo from '../../components/Twikoo.astro';
+import { siteConfig } from '../../config/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const allPosts = await getCollection('blog');
+const sortedPosts = allPosts.sort((a, b) => b.data.timestamp.valueOf() - a.data.timestamp.valueOf());
+const currentIndex = sortedPosts.findIndex(p => p.slug === post.slug);
+const prevPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
+const nextPost = currentIndex < sortedPosts.length - 1 ? sortedPosts[currentIndex + 1] : null;
+
+const timestamp = post.data.timestamp;
+const series = post.data.series || '未分类';
+const twikooEnvId = siteConfig.twikoo?.envId || '';
+const twikooLang = siteConfig.twikoo?.lang || 'zh-CN';
+---
+
+<Layout title={post.data.title}>
+  <article class="Article Article--single">
+    <h1 class="Article__title"><span>{post.data.title}</span></h1>
+    <div class="Article__topMeta">
+      <span class="entry-date"><time datetime={timestamp ? timestamp.toISOString() : ''}>
+        {timestamp ? timestamp.toLocaleDateString('zh-CN', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        }) : '未知时间'}
+      </time></span>
+      <span class="by-author">by <a href="#">Admin</a></span>
+    </div>
+    <div class="Article__content Content">
+      <Content />
+    </div>
+    <div class="Article__footer">
+      <div class="Article__meta">
+        <span class="post-tags">
+          {post.data.tags && post.data.tags.length > 0 && post.data.tags.map(tag => (
+            <a href={`/directory?tag=${tag}`}>{tag}</a>
+          ))}
+        </span>
+      </div>
+    </div>
+    
+    {(prevPost || nextPost) && (
+      <nav class="post-navigation">
+        {prevPost && (
+          <div class="nav-prev">
+            <a href={`/post/${prevPost.slug}`}>&larr; {prevPost.data.title}</a>
+          </div>
+        )}
+        {nextPost && (
+          <div class="nav-next">
+            <a href={`/post/${nextPost.slug}`}>{nextPost.data.title} &rarr;</a>
+          </div>
+        )}
+      </nav>
+    )}
+    
+    {twikooEnvId && <Twikoo envId={twikooEnvId} lang={twikooLang} />}
+  </article>
+  
+  <aside class="floating-toc">
+    <div class="toc-container">
+      <h3 class="toc-title">目录</h3>
+      <nav id="table-of-contents" class="toc"></nav>
+    </div>
+  </aside>
+  
+  <div class="floating-buttons">
+    <button id="comment-btn" class="floating-btn" title="去评论区">
+      <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM18 14H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+      </svg>
+    </button>
+    <button id="top-btn" class="floating-btn" title="回到顶部">
+      <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/>
+      </svg>
+    </button>
+  </div>
+  
+  <script>
+    const commentBtn = document.getElementById('comment-btn');
+    const topBtn = document.getElementById('top-btn');
+    
+    commentBtn.addEventListener('click', () => {
+      const commentSection = document.getElementById('tcomment');
+      if (commentSection) {
+        commentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+    
+    topBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+    
+    function generateTableOfContents() {
+      const content = document.querySelector('.Article__content');
+      const toc = document.getElementById('table-of-contents');
+      
+      if (!content || !toc) {
+        console.log('Content or TOC not found');
+        return;
+      }
+      
+      const headings = content.querySelectorAll('h1, h2, h3, h4, h5, h6');
+      
+      console.log('Found headings:', headings.length);
+      
+      if (headings.length === 0) {
+        toc.parentElement.style.display = 'none';
+        return;
+      }
+      
+      toc.parentElement.style.display = 'block';
+      
+      const tocList = document.createElement('ul');
+      tocList.className = 'toc-list';
+      
+      headings.forEach((heading, index) => {
+        if (!heading.id) {
+          heading.id = `heading-${index}`;
+        }
+        
+        const listItem = document.createElement('li');
+        listItem.className = `toc-item toc-${heading.tagName.toLowerCase()}`;
+        
+        const link = document.createElement('a');
+        link.href = `#${heading.id}`;
+        link.textContent = heading.textContent;
+        link.className = 'toc-link';
+        
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        
+        listItem.appendChild(link);
+        tocList.appendChild(listItem);
+      });
+      
+      toc.innerHTML = '';
+      toc.appendChild(tocList);
+    }
+    
+    document.addEventListener('DOMContentLoaded', generateTableOfContents);
+  </script>
+</Layout>
+
+<style>
+  .floating-toc {
+    position: fixed;
+    left: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 280px;
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+    z-index: 999;
+  }
+  
+  .toc-container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .toc-title {
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: 600;
+  }
+  
+  .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .toc-item {
+    margin-bottom: 0.5rem;
+  }
+  
+  .toc-link {
+    color: #666;
+    text-decoration: none;
+    display: block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+  }
+  
+  .toc-link:hover {
+    background: #F03838;
+    color: white;
+  }
+  
+  .toc-h2 {
+    padding-left: 0;
+  }
+  
+  .toc-h3 {
+    padding-left: 1rem;
+  }
+  
+  .toc-h4 {
+    padding-left: 2rem;
+  }
+  
+  .toc-h5 {
+    padding-left: 3rem;
+  }
+  
+  .toc-h6 {
+    padding-left: 4rem;
+  }
+  
+  @media (max-width: 1024px) {
+    .floating-toc {
+      display: none;
+    }
+  }
+  
+  .post-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e0e0e0;
+  }
+  
+  .nav-prev, .nav-next {
+    flex: 1;
+  }
+  
+  .nav-next {
+    text-align: right;
+  }
+  
+  .nav-prev a, .nav-next a {
+    color: #9e9e9e;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-prev a:hover, .nav-next a:hover {
+    color: #F03838;
+  }
+  
+  .floating-buttons {
+    position: fixed;
+    right: 2rem;
+    bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    z-index: 1000;
+  }
+  
+  .floating-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    border: none;
+    background: #F03838;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+  }
+  
+  .floating-btn:hover {
+    background: #d62c2c;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  .floating-btn:active {
+    transform: translateY(0);
+  }
+</style>

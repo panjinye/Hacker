@@ -1,0 +1,45 @@
+---
+interface Props {
+  envId: string;
+  lang?: string;
+}
+
+const { envId, lang = 'zh-CN' } = Astro.props;
+---
+
+<div id="tcomment"></div>
+
+<script define:vars={{ envId, lang }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log('Twikoo: Initializing with envId:', envId);
+    
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/twikoo@1.6.39/dist/twikoo.all.min.js';
+    script.onload = () => {
+      console.log('Twikoo: Script loaded successfully');
+      try {
+        twikoo.init({
+          envId: envId,
+          lang: lang,
+          el: '#tcomment',
+        });
+        console.log('Twikoo: Initialized successfully');
+      } catch (error) {
+        console.error('Twikoo: Initialization failed', error);
+      }
+    };
+    script.onerror = () => {
+      console.error('Twikoo: Failed to load script');
+    };
+    document.head.appendChild(script);
+  });
+</script>
+
+<style>
+  #tcomment {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e0e0e0;
+    min-height: 200px;
+  }
+</style>

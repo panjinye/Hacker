@@ -1,0 +1,52 @@
+---
+// 首页
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog');
+const posts = allPosts
+  .sort((a, b) => b.data.timestamp.valueOf() - a.data.timestamp.valueOf())
+  .slice(0, 5);
+---
+
+<Layout title="Hacker Theme">
+  <div class="blog">
+    {posts.map((post) => {
+      const timestamp = post.data.timestamp;
+      const series = post.data.series || '未分类';
+      return (
+        <article class="Article">
+          <h2 class="Article__title Article__title--large"><a href={`/post/${post.slug}`}><span>{post.data.title}</span></a></h2>
+          <div class="Article__topMeta">
+            <span class="entry-date"><time datetime={timestamp ? timestamp.toISOString() : ''}>
+              {timestamp ? timestamp.toLocaleDateString('zh-CN', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              }) : '未知时间'}
+            </time></span>
+            <span class="by-author">by <a href="#">Admin</a></span>
+          </div>
+          <div class="Article__excerpt">
+            <p>{post.data.title}</p>
+          </div>
+          <div class="Article__footer">
+            <div class="Article__meta">
+              <span class="post-tags">
+                {post.data.tags && post.data.tags.length > 0 && post.data.tags.map(tag => (
+                  <a href={`/directory?tag=${tag}`}>{tag}</a>
+                ))}
+              </span>
+            </div>
+          </div>
+        </article>
+      );
+    })}
+  </div>
+</Layout>
+
+<style>
+  .Article__title--large {
+    font-size: 1.5em;
+  }
+</style>

@@ -1,0 +1,18 @@
+---
+// About页面
+import Layout from '../layouts/Layout.astro';
+import { getEntry } from 'astro:content';
+
+const aboutPage = await getEntry('pages', 'about');
+const { Content } = await aboutPage.render();
+const { title } = aboutPage.data;
+---
+
+<Layout title={`${title} - Hacker Theme`}>
+  <article class="Article page">
+    <h1 class="Article__title"><span>{title}</span></h1>
+    <div class="Article__content Content">
+      <Content />
+    </div>
+  </article>
+</Layout>

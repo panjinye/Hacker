@@ -1,0 +1,20 @@
+---
+// Header组件
+import { siteConfig } from '../config/site';
+---
+
+<header>
+  <div class="site-branding">
+    <h1 class="site-title"><a href="/">{siteConfig.title}</a></h1>
+    <p class="site-description">{siteConfig.description}</p>
+  </div>
+  <nav class="main-navigation">
+    <ul class="primary-menu">
+      {siteConfig.navigation.map((item) => (
+        <li key={item.url}>
+          <a href={item.url}>{item.name}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
