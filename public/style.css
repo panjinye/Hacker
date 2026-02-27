@@ -1,11 +1,4 @@
 @charset "UTF-8";
-:root {
-  --primary-color: #F03838;
-  --primary-hover: #e41111;
-  --primary-light: #f25050;
-  --primary-disabled: #f46767;
-}
-
 /*
 Theme Name: Hacker
 Theme URI: http://www.20theme.com/themes/hacker
@@ -625,7 +618,7 @@ textarea {
 }
 
 a {
-  color: var(--primary-color);
+  color: #F03838;
   text-decoration: none;
 }
 
@@ -634,7 +627,7 @@ a[href="#"], a.is-disabled {
 }
 
 a:hover {
-  color: var(--primary-hover);
+  color: #e41111;
 }
 
 em {
@@ -763,7 +756,7 @@ iframe {
   display: inline-block;
   color: #fff !important;
   font-weight: bolder;
-  background-color: var(--primary-color);
+  background-color: #F03838;
   line-height: 2rem;
   height: 2rem;
   padding: 0 1rem;
@@ -807,7 +800,7 @@ iframe {
 
 .main-navigation .primary-menu > li > a {
   display: block;
-  color: var(--primary-color);
+  color: #F03838;
   font-size: 16px;
   padding: 0 1rem;
 }
@@ -1092,7 +1085,7 @@ fieldset[disabled]
 }
 
 .Article__title a:hover {
-  color: var(--primary-color);
+  color: #F03838;
 }
 
 .Article__title a:hover span {
@@ -1128,15 +1121,15 @@ fieldset[disabled]
 }
 
 .Article__topMeta a:hover {
-  color: var(--primary-color);
+  color: #F03838;
 }
 
 .Article__topMeta .post-edit-link {
-  color: var(--primary-color);
+  color: #F03838;
 }
 
 .Article__topMeta .post-edit-link:hover {
-  color: var(--primary-hover);
+  color: #e41111;
 }
 
 .Article__topMeta time {
@@ -1194,7 +1187,7 @@ fieldset[disabled]
 }
 
 .Article__meta a:hover {
-  color: var(--primary-color);
+  color: #F03838;
 }
 
 .Article__meta i {
@@ -1231,7 +1224,7 @@ fieldset[disabled]
   display: block;
   width: 12px;
   height: 11px;
-  background-color: var(--primary-color);
+  background-color: #F03838;
 }
 
 .sticky-mark:before {
@@ -1244,7 +1237,7 @@ fieldset[disabled]
   height: 0;
   border-style: solid;
   border-width: 6px 6px 0 0;
-  border-color: var(--primary-color) transparent transparent transparent;
+  border-color: #F03838 transparent transparent transparent;
 }
 
 .sticky-mark:after {
@@ -1257,7 +1250,7 @@ fieldset[disabled]
   height: 0;
   border-style: solid;
   border-width: 0 6px 6px 0;
-  border-color: transparent var(--primary-color) transparent transparent;
+  border-color: transparent #F03838 transparent transparent;
 }
 
 .js-rating.is-active .icon-heart {
@@ -1523,7 +1516,7 @@ fieldset[disabled]
 
 .Content a {
   padding-bottom: 0.025em;
-  color: var(--primary-color);
+  color: #F03838;
   text-decoration: none;
 }
 
@@ -1861,8 +1854,8 @@ fieldset[disabled]
 .nav-links .nav-next a:hover,
 .comment-navigation .nav-next a:hover {
   color: #fff;
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
+  background-color: #F03838;
+  border-color: #F03838;
 }
 
 /*----------------------------------------------------------------------*/
@@ -1946,7 +1939,7 @@ fieldset[disabled]
 }
 
 .tags-list a:hover {
-  color: var(--primary-hover);
+  color: #e41111;
 }
 
 .video-embed {
@@ -1981,7 +1974,7 @@ button,
   position: relative;
   display: inline-block;
   color: #fff;
-  background-color: var(--primary-color);
+  background-color: #F03838;
   -webkit-border-radius: 0;
           border-radius: 0;
   margin: 0;
@@ -2005,7 +1998,7 @@ button:active,
 input[type="submit"]:hover,
 button:hover,
 .btn:hover {
-  background-color: var(--primary-light);
+  background-color: #f25050;
 }
 
 input[type="submit"][disabled], input[type="submit"].is-disabled,
@@ -2014,7 +2007,7 @@ button.is-disabled,
 .btn[disabled],
 .btn.is-disabled {
   cursor: not-allowed;
-  background-color: var(--primary-disabled);
+  background-color: #f46767;
 }
 
 input[type="submit"].btn-lg,
@@ -2317,11 +2310,11 @@ body.dark dd {
 }
 
 body.dark a {
-  color: var(--primary-color);
+  color: #F03838;
 }
 
 body.dark a:hover {
-  color: var(--primary-hover);
+  color: #e41111;
 }
 
 body.dark .Article__title a {
@@ -2347,15 +2340,15 @@ body.dark .Article__topMeta a {
 }
 
 body.dark .Article__topMeta a:hover {
-  color: var(--primary-color);
+  color: #F03838;
 }
 
 body.dark .Article__topMeta .post-edit-link {
-  color: var(--primary-color);
+  color: #F03838;
 }
 
 body.dark .Article__topMeta .post-edit-link:hover {
-  color: var(--primary-hover);
+  color: #e41111;
 }
 
 body.dark .Article__excerpt {
@@ -2371,7 +2364,7 @@ body.dark .Article__meta a {
 }
 
 body.dark .Article__meta a:hover {
-  color: var(--primary-color);
+  color: #F03838;
 }
 
 body.dark .Article__meta i {
@@ -2379,7 +2372,7 @@ body.dark .Article__meta i {
 }
 
 body.dark .Content a {
-  color: var(--primary-color);
+  color: #F03838;
 }
 
 body.dark .Content h1,
@@ -2444,7 +2437,7 @@ body.dark .site-footer .meta a {
 }
 
 body.dark .site-footer .meta a:hover {
-  color: var(--primary-color);
+  color: #F03838;
 }
 
 body.dark .Alert {
@@ -2519,14 +2512,14 @@ body.dark .Pagination__next:hover,
 body.dark .nav-links .nav-next a:hover,
 body.dark .comment-navigation .nav-next a:hover {
   color: #fff;
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
+  background-color: #F03838;
+  border-color: #F03838;
 }
 
 body.dark input[type="submit"],
 body.dark button,
 body.dark .btn {
-  background-color: var(--primary-color);
+  background-color: #F03838;
   color: #fff;
 }
 
@@ -2539,7 +2532,7 @@ body.dark .btn:active {
 body.dark input[type="submit"]:hover,
 body.dark button:hover,
 body.dark .btn:hover {
-  background-color: var(--primary-light);
+  background-color: #f25050;
 }
 
 body.dark input[type="submit"][disabled],
@@ -2548,7 +2541,7 @@ body.dark button[disabled],
 body.dark button.is-disabled,
 body.dark .btn[disabled],
 body.dark .btn.is-disabled {
-  background-color: var(--primary-disabled);
+  background-color: #f46767;
 }
 
 body.dark .tags-list a {
@@ -2556,11 +2549,11 @@ body.dark .tags-list a {
 }
 
 body.dark .tags-list a:hover {
-  color: var(--primary-color);
+  color: #F03838;
 }
 
 body.dark .site-branding .site-title a {
-  background-color: var(--primary-color);
+  background-color: #F03838;
   color: #fff !important;
 }
 
@@ -2573,7 +2566,7 @@ body.dark .site-branding .site-description {
 }
 
 body.dark .main-navigation .primary-menu > li > a {
-  color: var(--primary-color);
+  color: #F03838;
 }
 
 body.dark .main-navigation .primary-menu .menu-item-has-children:hover {
