@@ -78,6 +78,8 @@ const daysRemaining = Math.ceil((targetDate.getTime() - now.getTime()) / (1000 *
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    width: 32px;
+    height: 32px;
     color: #9e9e9e;
     transition: color 0.3s ease;
     background: none;
@@ -85,10 +87,28 @@ const daysRemaining = Math.ceil((targetDate.getTime() - now.getTime()) / (1000 *
     cursor: pointer;
     padding: 0;
     margin: 0;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
+  .social-icon:focus {
+    outline: none;
+  }
+  
+  #theme-toggle {
+    font-size: inherit;
+    font-family: inherit;
+    background: transparent;
+    border: none;
+    box-shadow: none;
   }
   
   .social-icon:hover {
     color: #F03838;
+  }
+  
+  body.dark .social-icon {
+    color: #9e9e9e;
   }
   
   body.dark .social-icon:hover {
