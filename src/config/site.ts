@@ -18,11 +18,13 @@ export const siteConfig = {
     twitter: "https://twitter.com/ficorpan",
     qq: "https://wpa.qq.com/msgrd?v=3&uin=316160777&site=qq&menu=yes",
     mastodon: "https://mastodon.social/@ficor",
-    email: "mailto:i@ficor.cc"
+    email: "mailto:i@ficor.cc",
+    rss: "https://ficor.net/feed"
   },
   navigation: [
     { name: "Home", url: "/" },
     { name: "About", url: "/about" },
-    { name: "Category", url: "/category" }
+    { name: "Category", url: "/category" },
+    { name: "Links", url: "/links" }
   ]
 };

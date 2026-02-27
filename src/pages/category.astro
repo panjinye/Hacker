@@ -21,7 +21,7 @@ allPosts.forEach(post => {
 const categories = Array.from(categoryMap.entries())
   .map(([name, count]) => ({
     name,
-    slug: name.toLowerCase().replace(/\s+/g, '-'),
+    slug: name.toLowerCase().split(' ').join('-'),
     count
   }))
   .sort((a, b) => b.count - a.count);
@@ -43,7 +43,7 @@ allPosts.forEach(post => {
 const tags = Array.from(tagMap.entries())
   .map(([name, count]) => ({
     name,
-    slug: name.toLowerCase().replace(/\s+/g, '-'),
+    slug: name.toLowerCase().split(' ').join('-'),
     count
   }))
   .sort((a, b) => b.count - a.count);

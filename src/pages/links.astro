@@ -1,0 +1,138 @@
+---
+// 友链页面
+import Layout from '../layouts/Layout.astro';
+import { linksConfig } from '../config/links';
+
+const links = linksConfig;
+---
+
+<Layout title="友链">
+  <div class="links-page">
+    <h2 class="links-title">友情链接</h2>
+    <p class="links-description">这些是我推荐的网站</p>
+    
+    <div class="links-grid">
+      {links.map((link, index) => (
+        <div key={index} class="link-item">
+          <a href={link.url} target="_blank" rel="noopener noreferrer" class="link-card">
+            <div class="link-avatar">
+                <img src={link.image} alt={link.title} />
+              </div>
+              <div class="link-info">
+                <h3 class="link-name">{link.title}</h3>
+                <p class="link-description">{link.description}</p>
+              </div>
+          </a>
+        </div>
+      ))}
+    </div>
+    
+    <div class="site-info">
+      <h2 class="site-info-title">站点信息</h2>
+      <div class="site-info-content">
+        <p>网站名称：荒野菲克</p>
+        <p>网站地址：https://ficor.net</p>
+        <p>网站描述：记录技术探索与生活点滴</p>
+        <p>头像地址：https://img.ficor.net/uploads/2026/01/6960704808a61.webp</p>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .links-page {
+    padding: 2rem 0;
+  }
+  
+  .links-title,
+  .site-info-title {
+    font-size: 1.5rem;
+    color: #212121;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .links-description {
+    text-align: center;
+    color: #616161;
+    margin-bottom: 2rem;
+  }
+  
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .link-item {
+    margin-bottom: 1rem;
+  }
+  
+  .link-card {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+  
+  .link-card:hover {
+    background-color: #e0e0e0;
+    transform: translateY(-2px);
+  }
+  
+  .link-avatar {
+    margin-right: 1rem;
+    flex-shrink: 0;
+  }
+  
+  .link-avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .link-info {
+    flex: 1;
+  }
+  
+  .link-name {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.1rem;
+    color: #212121;
+  }
+  
+  .link-description {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #616161;
+  }
+  
+  .site-info {
+    margin-top: 3rem;
+  }
+  
+  .site-info-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: left;
+  }
+  
+  .site-info-content p {
+    margin: 0.5rem 0;
+    color: #616161;
+  }
+  
+  @media (max-width: 768px) {
+    .links-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

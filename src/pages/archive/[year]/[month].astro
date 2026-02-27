@@ -1,0 +1,133 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+  const archiveMap = new Map();
+  
+  allPosts.forEach(post => {
+    if (post.data.timestamp) {
+      const date = new Date(post.data.timestamp);
+      const year = date.getFullYear().toString();
+      const month = (date.getMonth() + 1).toString();
+      
+      if (!archiveMap.has(year)) {
+        archiveMap.set(year, new Set());
+      }
+      archiveMap.get(year)?.add(month);
+    }
+  });
+  
+  const paths = [];
+  archiveMap.forEach((months, year) => {
+    months.forEach(month => {
+      paths.push({
+        params: { year, month },
+        props: { year, month }
+      });
+    });
+  });
+  
+  return paths;
+}
+
+const { year, month } = Astro.props;
+const allPosts = await getCollection('blog');
+const archivePosts = allPosts
+  .filter(post => {
+    if (!post.data.timestamp) return false;
+    const date = new Date(post.data.timestamp);
+    return date.getFullYear().toString() === year && (date.getMonth() + 1).toString() === month;
+  })
+  .sort((a, b) => {
+    if (!a.data.timestamp || !b.data.timestamp) return 0;
+    return b.data.timestamp.valueOf() - a.data.timestamp.valueOf();
+  });
+---
+
+<Layout title={`归档: ${year}年${month}月`}>
+  <div class="archive-posts">
+    <h1 class="archive-title">归档: {year}年{month}月</h1>
+    <p class="archive-description">共 {archivePosts.length} 篇文章</p>
+    
+    <div class="blog">
+      {archivePosts.map((post) => {
+        const timestamp = post.data.timestamp;
+        return (
+          <article class="Article">
+            <h2 class="Article__title"><a href={`/post/${post.slug}`}><span>{post.data.title}</span></a></h2>
+            <div class="Article__topMeta">
+              <span class="entry-date"><time datetime={timestamp ? timestamp.toISOString() : ''}>
+                {timestamp ? timestamp.toLocaleDateString('zh-CN', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                }) : '未知时间'}
+              </time></span>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .archive-posts {
+    padding: 2rem 0;
+  }
+  
+  .archive-title {
+    font-size: 2rem;
+    color: #212121;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .archive-description {
+    text-align: center;
+    color: #616161;
+    margin-bottom: 2rem;
+  }
+  
+  .blog {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .Article {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .Article:last-child {
+    border-bottom: none;
+  }
+  
+  .Article__title {
+    margin: 0;
+    font-size: 1.2rem;
+    flex: 1;
+  }
+  
+  .Article__title a {
+    color: #212121;
+    text-decoration: none;
+  }
+  
+  .Article__title a:hover {
+    color: #F03838;
+  }
+  
+  .Article__topMeta {
+    font-size: 0.9rem;
+    color: #616161;
+    margin-left: 1rem;
+    white-space: nowrap;
+  }
+</style>

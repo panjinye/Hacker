@@ -1,0 +1,119 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+  const tags = new Set();
+  
+  allPosts.forEach(post => {
+    if (post.data.tags) {
+      post.data.tags.forEach(tag => {
+        tags.add(tag);
+      });
+    }
+  });
+  
+  const paths = [];
+  tags.forEach(tag => {
+    let slug = tag.toLowerCase();
+    slug = slug.split(' ').join('-');
+    paths.push({
+      params: { slug },
+      props: { tag }
+    });
+  });
+  
+  return paths;
+}
+
+const { tag } = Astro.props;
+const allPosts = await getCollection('blog');
+const posts = allPosts.filter(post => post.data.tags && post.data.tags.includes(tag));
+---
+
+<Layout title={`标签: ${tag}`}>
+  <div class="tag-posts">
+    <h1 class="tag-title">标签: {tag}</h1>
+    <p class="tag-description">共 {posts.length} 篇文章</p>
+    
+    <div class="blog">
+      {posts.map(post => {
+        const timestamp = post.data.timestamp;
+        return (
+          <article class="Article">
+            <h2 class="Article__title"><a href={`/post/${post.slug}`}><span>{post.data.title}</span></a></h2>
+            <div class="Article__topMeta">
+              <span class="entry-date"><time datetime={timestamp ? timestamp.toISOString() : ''}>
+                {timestamp ? timestamp.toLocaleDateString('zh-CN', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                }) : '未知时间'}
+              </time></span>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .tag-posts {
+    padding: 2rem 0;
+  }
+  
+  .tag-title {
+    font-size: 2rem;
+    color: #212121;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .tag-description {
+    text-align: center;
+    color: #616161;
+    margin-bottom: 2rem;
+  }
+  
+  .blog {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .Article {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .Article:last-child {
+    border-bottom: none;
+  }
+  
+  .Article__title {
+    margin: 0;
+    font-size: 1.2rem;
+    flex: 1;
+  }
+  
+  .Article__title a {
+    color: #212121;
+    text-decoration: none;
+  }
+  
+  .Article__title a:hover {
+    color: #F03838;
+  }
+  
+  .Article__topMeta {
+    font-size: 0.9rem;
+    color: #616161;
+    margin-left: 1rem;
+    white-space: nowrap;
+  }
+</style>
