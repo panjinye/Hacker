@@ -69,12 +69,20 @@ const totalPages = Math.ceil(totalPosts / pageSize);
             <p>{excerpt || '暂无摘要'}</p>
           </div>
           <div class="Article__footer">
-            <div class="Article__meta">
+            <div class="Article__meta" style="display: flex; justify-content: space-between; align-items: center;">
               <span class="post-tags">
-                {post.data.tags && post.data.tags.length > 0 && post.data.tags.map(tag => {
-                  const tagSlug = tag.toLowerCase().split(' ').join('-');
-                  return <a href={`/tag/${tagSlug}`}>{tag}</a>;
-                })}
+                {post.data.tags && post.data.tags.length > 0 && (
+                  <>
+                    <span class="icon-tags"></span>
+                    {post.data.tags.map(tag => {
+                      const tagSlug = tag.toLowerCase().split(' ').join('-');
+                      return <a href={`/tag/${tagSlug}`}>{tag}</a>;
+                    })}
+                  </>
+                )}
+              </span>
+              <span class="comment-count">
+                <i class="fas fa-comments"></i> 0
               </span>
             </div>
           </div>
@@ -88,9 +96,6 @@ const totalPages = Math.ceil(totalPosts / pageSize);
       <button class="pagination__link" data-page="prev" title="上一页">
         <i class="fas fa-chevron-left"></i>
       </button>
-      {Array.from({ length: totalPages }, (_, i) => i + 1).map(num => (
-        <button key={num} class="pagination__link" data-page={num}>{num}</button>
-      ))}
       <button class="pagination__link" data-page="next" title="下一页">
         <i class="fas fa-chevron-right"></i>
       </button>
@@ -122,15 +127,11 @@ const totalPages = Math.ceil(totalPosts / pageSize);
       });
       
       // 更新分页按钮状态
-      const buttons = document.querySelectorAll('.pagination__link');
-      buttons.forEach(button => {
-        const buttonPage = parseInt(button.getAttribute('data-page'));
-        if (buttonPage === page) {
-          button.classList.add('pagination__link--active');
-        } else {
-          button.classList.remove('pagination__link--active');
-        }
-      });
+    const buttons = document.querySelectorAll('.pagination__link');
+    buttons.forEach(button => {
+      // 移除所有按钮的active状态
+      button.classList.remove('pagination__link--active');
+    });
       
       // 更新URL
       window.history.pushState({}, '', `/?page=${page}`);
@@ -199,5 +200,16 @@ const totalPages = Math.ceil(totalPosts / pageSize);
   .pagination__link--active {
     background-color: #F03838;
     color: #fff;
+  }
+  
+  .post-tags a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .post-tags .icon-tags {
+    display: inline-block;
+    vertical-align: middle;
   }
 </style>

@@ -1,6 +1,7 @@
 // 站点配置文件
 export const siteConfig = {
   title: "荒野菲克",
+  browserTitle: "荒野菲克",
   description: "在路上的思绪与脚印",
   author: "Ficor",
   email: "i@ficor.cc",
