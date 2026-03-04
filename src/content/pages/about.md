@@ -28,4 +28,6 @@ title: 关于本站
 
 ## 关于主题
 
-**ThoughtLite** 是一款专注内容创作的现代化 [Astro](https://astro.build/) 主题。
+**Hacker** 是一款专注内容创作的现代化 [Astro](https://astro.build/) 主题。是一款选择回归本源，专注于写作并且易于阅读的的简洁博客主题。
+它具有完全响应式设计，支持视网膜显示，且易于自定义。每个元素都能响应，为你的读者在浏览博客的全过程中提供最佳的用户体验。
+一开始是moyo为Wordpress所创作的一个主题，由作者Ficor从Wordpress移植而来，基于Astro构建，响应式设计，静态站点生成，支持Markdown格式的博客文章和页面。

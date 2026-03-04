@@ -16,7 +16,11 @@ const links = linksConfig;
         <div key={index} class="link-item">
           <a href={link.url} target="_blank" rel="noopener noreferrer" class="link-card">
             <div class="link-avatar">
-                <img src={link.image} alt={link.title} />
+                <img 
+                  src={link.image && link.image !== "#" ? link.image : "https://cravatar.cn/avatar/00000000000000000000000000000000?d=mp&f=y"} 
+                  alt={link.title} 
+                  onError="this.src='https://cravatar.cn/avatar/00000000000000000000000000000000?d=mp&f=y'" 
+                />
               </div>
               <div class="link-info">
                 <h3 class="link-name">{link.title}</h3>
